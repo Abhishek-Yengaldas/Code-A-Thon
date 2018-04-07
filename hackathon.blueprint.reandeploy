@@ -2,11 +2,11 @@
   "environments": [
     {
       "name": "test-env",
-      "connectionName": "test",
-      "connectionType": "ssh",
+      "connectionName": "prod-REANPlatform-core",
+      "connectionType": "SSH",
       "envVersion": "01.00.00",
       "exportedByEmail": "arun.sanna@reancloud.com",
-      "exportedOn": 1523111527279,
+      "exportedOn": 1523114121703,
       "providerName": "rean-gov",
       "providerType": "aws",
       "region": "us-gov-west-1",
@@ -27,7 +27,7 @@
           "name": "Output",
           "resourceName": "output",
           "attributes": {
-            "output": "{\"vpc_id\":{\"value\":\"${test-vpc.id}\"},\"pub-subnet\":{\"value\":\"${pub-subnet.id}\"},\"priv-subnet\":{\"value\":\"${priv-subnet.id}\"},\"test-ins-sg\":{\"value\":\"${test-ins-sg.id}\"},\"tet-ins\":{\"value\":\"${test-instance.id}\"},\"instance-ip\":{\"value\":\"${test-instance.public_ip}\"},\"NAT-eip\":{\"value\":\"${nat-eip.public_ip}\"}}"
+            "output": "{\"vpc_id\":{\"value\":\"${test-vpc.id}\"},\"pub-subnet\":{\"value\":\"${pub-subnet.id}\"},\"priv-subnet\":{\"value\":\"${priv-subnet.id}\"},\"NAT-eip\":{\"value\":\"${nat-eip.public_ip}\"}}"
           },
           "positionX": 856,
           "positionY": 441

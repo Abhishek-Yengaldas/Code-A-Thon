@@ -1,127 +1,143 @@
 {
   "environments": [
     {
-      "name": "hack",
-      "connectionName": "hack",
-      "connectionType": "SSH",
-      "description": "vpc with server",
+      "name": "test-env",
+      "connectionName": "test",
+      "connectionType": "ssh",
       "envVersion": "01.00.00",
-      "exportedByEmail": "jayramzz092@gmail.com",
-      "exportedOn": 1523030933251,
-      "providerName": "AWS",
+      "exportedByEmail": "arun.sanna@reancloud.com",
+      "exportedOn": 1523111527279,
+      "providerName": "rean-gov",
       "providerType": "aws",
-      "region": "us-east-1",
+      "region": "us-gov-west-1",
       "resources": [
         {
-          "name": "hackathon-nat",
-          "resourceName": "aws_instance",
+          "name": "nat-eip",
+          "resourceName": "aws_eip",
           "attributes": {
-            "ami": "${var.bastion_ami_id}",
-            "associate_public_ip_address": "true",
+            "associate_with_private_ip": null,
+            "instance": null,
+            "network_interface": null,
+            "vpc": "true"
+          },
+          "positionX": 392,
+          "positionY": 65
+        },
+        {
+          "name": "Output",
+          "resourceName": "output",
+          "attributes": {
+            "output": "{\"vpc_id\":{\"value\":\"${test-vpc.id}\"},\"pub-subnet\":{\"value\":\"${pub-subnet.id}\"},\"priv-subnet\":{\"value\":\"${priv-subnet.id}\"},\"test-ins-sg\":{\"value\":\"${test-ins-sg.id}\"},\"tet-ins\":{\"value\":\"${test-instance.id}\"},\"instance-ip\":{\"value\":\"${test-instance.public_ip}\"},\"NAT-eip\":{\"value\":\"${nat-eip.public_ip}\"}}"
+          },
+          "positionX": 856,
+          "positionY": 441
+        },
+        {
+          "name": "priv-assoc",
+          "resourceName": "aws_route_table_association",
+          "attributes": {
+            "route_table_id": "${priv-route.id}",
+            "subnet_id": "${priv-subnet.id}"
+          },
+          "positionX": 386,
+          "positionY": 238
+        },
+        {
+          "name": "priv-route",
+          "resourceName": "aws_route_table",
+          "attributes": {
+            "propagating_vgws": null,
+            "route": "[{\"cidr_block\":\"0.0.0.0/0\",\"gateway_id\":\"${test-nat.id}\"}]",
+            "tags": "{\"Owner\":\"arun.sanna\",\"CreatedBy\":\"REAN Deploy\",\"Name\":\"priv-route\"}",
+            "vpc_id": "${test-vpc.id}"
+          },
+          "positionX": 530,
+          "positionY": 151
+        },
+        {
+          "name": "priv-subnet",
+          "resourceName": "aws_subnet",
+          "attributes": {
             "availability_zone": "",
-            "disable_api_termination": null,
-            "ebs_block_device": null,
-            "ebs_optimized": null,
-            "ephemeral_block_device": null,
-            "iam_instance_profile": null,
-            "instance_initiated_shutdown_behavior": "stop",
-            "instance_type": "${var.bastion_instance_type}",
-            "key_name": null,
-            "monitoring": null,
-            "name": "hackathon-nat",
-            "placement_group": null,
+            "cidr_block": "98.0.0.0/24",
+            "map_public_ip_on_launch": "false",
+            "tags": "{\"Owner\":\"arun.sanna\",\"CreatedBy\":\"REAN Deploy\",\"Name\":\"priv-subnet\"}",
+            "vpc_id": "${test-vpc.id}"
+          },
+          "positionX": 256,
+          "positionY": 141
+        },
+        {
+          "name": "pub-assoc",
+          "resourceName": "aws_route_table_association",
+          "attributes": {
+            "route_table_id": "${pub-route.id}",
+            "subnet_id": "${pub-subnet.id}"
+          },
+          "positionX": 422,
+          "positionY": 857
+        },
+        {
+          "name": "pub-route",
+          "resourceName": "aws_route_table",
+          "attributes": {
+            "propagating_vgws": null,
+            "route": "[{\"cidr_block\":\"0.0.0.0/0\",\"gateway_id\":\"${test-igw.id}\"}]",
+            "tags": "{\"Owner\":\"arun.sanna\",\"CreatedBy\":\"REAN Deploy\",\"Name\":\"pub-route\"}",
+            "vpc_id": "${test-vpc.id}"
+          },
+          "positionX": 554,
+          "positionY": 710
+        },
+        {
+          "name": "pub-subnet",
+          "resourceName": "aws_subnet",
+          "attributes": {
+            "availability_zone": null,
+            "cidr_block": "98.0.1.0/24",
+            "map_public_ip_on_launch": "true",
+            "tags": "{\"Owner\":\"arun.sanna\",\"CreatedBy\":\"REAN Deploy\",\"Name\":\"pub-subnet\"}",
+            "vpc_id": "${test-vpc.id}"
+          },
+          "positionX": 264,
+          "positionY": 703
+        },
+        {
+          "name": "test-igw",
+          "resourceName": "aws_internet_gateway",
+          "attributes": {
+            "tags": "{\"Owner\":\"arun.sanna\",\"CreatedBy\":\"REAN Deploy\",\"Name\":\"test-igw\"}",
+            "vpc_id": "${test-vpc.id}"
+          },
+          "positionX": 401,
+          "positionY": 391
+        },
+        {
+          "name": "test-nat",
+          "resourceName": "aws_nat_gateway",
+          "attributes": {
+            "allocation_id": "${nat-eip.id}",
+            "network_interface_id": null,
             "private_ip": null,
-            "root_block_device": null,
-            "security_groups": null,
-            "source_dest_check": "false",
-            "subnet_id": "${hackathon-public.id}",
-            "tags": "{\"Owner\":\"Rean\",\"CreatedBy\":\"REAN Deploy\",\"Name\":\"hackathon-nat\"}",
-            "tenancy": null,
-            "user_data": null,
-            "vpc_security_group_ids": null
+            "public_ip": null,
+            "subnet_id": "${pub-subnet.id}"
           },
-          "positionX": 502,
-          "positionY": 158
+          "positionX": 407,
+          "positionY": 549
         },
         {
-          "name": "hackathon-private",
-          "resourceName": "aws_subnet",
-          "attributes": {
-            "availability_zone": null,
-            "cidr_block": "${var.aws_privsubnet_cidr}",
-            "map_public_ip_on_launch": "true",
-            "tags": "{\"Owner\":\"Rean\",\"CreatedBy\":\"REAN Deploy\",\"Name\":\"hackathon-private\"}",
-            "vpc_id": "${hackathon-vpc.vpc_id}"
-          },
-          "positionX": 304,
-          "positionY": 255
-        },
-        {
-          "name": "hackathon-public",
-          "resourceName": "aws_subnet",
-          "attributes": {
-            "availability_zone": null,
-            "cidr_block": "${var.aws_pubsubnet_cidr}",
-            "map_public_ip_on_launch": "true",
-            "tags": "{\"Owner\":\"jay\",\"CreatedBy\":\"REAN Deploy\",\"Name\":\"hackathon-public\"}",
-            "vpc_id": "${hackathon-vpc.vpc_id}"
-          },
-          "positionX": 299,
-          "positionY": 57
-        },
-        {
-          "name": "hackathon-vpc",
+          "name": "test-vpc",
           "resourceName": "aws_vpc",
           "attributes": {
-            "cidr_block": "${var.aws_vpc_cidr}",
+            "cidr_block": "98.0.0.0/16",
             "enable_classiclink": null,
-            "enable_dns_hostnames": "false",
+            "enable_dns_hostnames": null,
             "enable_dns_support": null,
             "instance_tenancy": null,
-            "tags": "{\"Owner\":\"Rean\",\"CreatedBy\":\"REAN Deploy\",\"Name\":\"hackathon-vpc\"}"
+            "tags": "{\"Owner\":\"arun.sanna\",\"CreatedBy\":\"REAN Deploy\",\"Name\":\"test-vpc\"}"
           },
-          "positionX": 75,
-          "positionY": 57
-        },
-        {
-          "name": "Input Variables",
-          "resourceName": "Input Variables",
-          "attributes": {
-            "input_variables": "{\"owner\":\"rean\",\"environment\":\"hackathon\",\"ec2_ami_id\":\" \",\"ec2_instance_type\":\"t2.micro\",\"project\":\"Hackathon\",\"aws_vpc_cidr\":\"10.0.1.0/16\",\"aws_privsubnet_cidr\":\"10.0.1.0/24\",\"aws_pubsubnet_cidr\":\"10.0.2.0/24\",\"bastion_ami_id\":\"ami-1853ac65\",\"bastion_instance_type\":\"t2.micro\"}"
-          },
-          "positionX": 34,
-          "positionY": 251
-        },
-        {
-          "name": "priavte-server",
-          "resourceName": "aws_instance",
-          "attributes": {
-            "ami": "${var.ec2_ami_id}",
-            "associate_public_ip_address": "false",
-            "availability_zone": "",
-            "disable_api_termination": null,
-            "ebs_block_device": null,
-            "ebs_optimized": null,
-            "ephemeral_block_device": null,
-            "iam_instance_profile": null,
-            "instance_initiated_shutdown_behavior": "stop",
-            "instance_type": "${var.ec2_instance_type}",
-            "key_name": "ramdas-test.pem",
-            "monitoring": null,
-            "name": "priavte-server",
-            "placement_group": null,
-            "private_ip": null,
-            "root_block_device": null,
-            "security_groups": null,
-            "source_dest_check": "true",
-            "subnet_id": "${hackathon-private.id}",
-            "tags": "{\"Owner\":\"jay\",\"CreatedBy\":\"REAN Deploy\",\"Name\":\"priavte-server\"}",
-            "tenancy": null,
-            "user_data": null,
-            "vpc_security_group_ids": null
-          },
-          "positionX": 544,
-          "positionY": 60
+          "positionX": 33,
+          "positionY": 415
         }
       ]
     }
